@@ -43,10 +43,13 @@ INSTALLED_APPS = [
     'stats_api',
     'store_api',
     'rest_framework',
-    'players'
+    'players',
+    'rest_framework.authtoken',
+    'accounts',
 ]
 
 MIDDLEWARE = [
+    'fortnite.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,8 +89,8 @@ DATABASES = {
         'NAME': "fortnite",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "db",  
-        "PORT": 5432, # This is the port on the host machine (which will be mapped to 5432 in the container)
+        "HOST": "localhost",  
+        "PORT": 5454, # This is the port on the host machine (which will be mapped to 5432 in the container)
     }
 }
 
@@ -132,3 +135,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
